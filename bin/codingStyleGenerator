@@ -136,6 +136,7 @@ function guessVendorPath(): string
     $possibleVendorPaths = [
         __DIR__ . '/..',
         __DIR__ . '/../vendor',
+        __DIR__ . '/../../..',
     ];
 
     foreach ($possibleVendorPaths as $possibleVendorPath) {
