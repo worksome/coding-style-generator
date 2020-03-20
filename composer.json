@@ -1,0 +1,23 @@
+{
+    "name": "worksome/phpinsights-coding-style-generator",
+    "description": "Generate a coding style from a php insights configuration file",
+    "type": "library",
+    "require": {
+        "nunomaduro/phpinsights": "dev-master",
+        "symfony/var-dumper": "^5.0",
+        "tightenco/collect": "^7.0",
+        "twig/twig": "^3.0"
+    },
+    "authors": [
+        {
+            "name": "Oliver Nybroe",
+            "email": "oliver@worksome.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Worksome\\CodingStyleGenerator\\": "src"
+        }
+    },
+    "bin": ["bin/codingStyleGenerator"]
+}

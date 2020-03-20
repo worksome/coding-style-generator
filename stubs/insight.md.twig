@@ -1,0 +1,21 @@
+### {{insight.title}} {% if insight.name in supportedInsights %}<AutoChecked/>{% endif %}
+
+{% if insight.hasDescription %}
+{{insight.description|raw}}
+{% endif %}
+
+{% if insight.hasBadCode %}
+::: danger Bad
+```php
+{{insight.badCode|raw}}
+```
+:::
+{% endif %}
+
+{% if insight.hasGoodCode %}
+::: tip Good
+```php
+{{insight.goodCode|raw}}
+```
+:::
+{% endif %}

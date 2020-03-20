@@ -1,0 +1,164 @@
+#!/usr/bin/env php
+<?php
+
+use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
+use NunoMaduro\PhpInsights\Domain\MetricsFinder;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\ArrayInput;
+use Worksome\CodingStyleGenerator\Configuration;
+use Worksome\CodingStyleGenerator\Group;
+
+
+$vendorPath = guessVendorPath();
+$stubPath = guessStubPath($vendorPath);
+
+require_once "{$vendorPath}/autoload.php";
+require_once "{$vendorPath}/squizlabs/php_codesniffer/autoload.php";
+
+$input = new ArgvInput();
+$outputPath = $input->getFirstArgument() ?? 'docs';
+$configPath = $input->getParameterOption('--config-path');
+$insightConfigPath = $input->getParameterOption('--insight-config-path') ?? "";
+
+// Create output folder
+if (!file_exists($outputPath)) {
+    mkdir($outputPath);
+}
+
+
+$allInsights = getInsightsFromConfig($insightConfigPath);
+
+// Generate content files
+$config = new Configuration(
+    require "$stubPath/config.php",
+    require $configPath
+);
+
+$loader = new \Twig\Loader\FilesystemLoader($stubPath);
+$twig = new \Twig\Environment($loader, ['debug' => true]);
+$twig->addExtension(new \Twig\Extension\DebugExtension);
+
+$template = $twig->load('group.md.twig');
+
+$config->getGroups()->each(function (Group $group) use ($template, $allInsights, $outputPath) {
+    $file = fopen("{$outputPath}/{$group->toFileName()}.md", 'w');
+
+    if ($file === false) {
+        throw new Exception("Couldn't create file.");
+    }
+    fwrite(
+        $file,
+        $template->render(['group' => $group, 'level' => 1, 'supportedInsights' => $allInsights])
+    );
+
+    fclose($file);
+    echo "Generated {$outputPath}/{$group->toFileName()}.md\n";
+});
+
+// Generate stub files.
+$files = [
+    '.gitignore',
+    'package.json',
+    'README.md',
+    '.vuepress/',
+    '.vuepress/config.js',
+    '.vuepress/components/',
+    '.vuepress/components/AutoChecked.vue',
+];
+
+foreach ($files as $fileName) {
+    $dest = "$outputPath/{$fileName}";
+
+    if (file_exists($dest)) {
+        continue;
+    }
+    
+    // Check if it's a directory.
+    if (substr($dest, -1) === '/') {
+        mkdir($dest);
+        continue;
+    }
+    
+    $file = fopen($dest, 'w');
+
+    fwrite(
+        $file,
+        $twig->render("vuepress/{$fileName}.twig", ['config' => $config])
+    );
+
+    fclose($file);
+
+    echo "Created $dest.\n";
+}
+
+
+/**
+ * @return array
+ */
+function getInsightsFromConfig(string $configPath): array
+{
+    $phpInsightsInput = new ArrayInput(
+        [
+            'directory' => getcwd(),
+            '--config-path' => $configPath,
+        ],
+        AnalyseDefinition::get()
+    );
+
+    $phpInsightsConfiguration = ConfigResolver::resolve(
+        require ConfigResolver::resolvePath($phpInsightsInput),
+        $phpInsightsInput
+    );
+
+
+    $metrics = MetricsFinder::find();
+
+    $allInsights = [];
+    foreach ($metrics as $metricClass) {
+        /** @var HasInsights $metric */
+        $metric = new $metricClass();
+
+        $insights = $metric instanceof HasInsights ? $metric->getInsights() : [];
+
+        $toAdd = $phpInsightsConfiguration->getAddedInsightsByMetric($metricClass);
+        $insights = array_merge($insights, $toAdd);
+
+        // Remove insights based on config.
+        $allInsights = array_merge($allInsights, array_diff($insights, $phpInsightsConfiguration->getRemoves()));
+    }
+    return $allInsights;
+}
+
+function guessVendorPath(): string
+{
+    $possibleVendorPaths = [
+        __DIR__ . '/..',
+        __DIR__ . '/../vendor',
+    ];
+
+    foreach ($possibleVendorPaths as $possibleVendorPath) {
+        if (file_exists("{$possibleVendorPath}/autoload.php")) {
+            return $possibleVendorPath;
+        }
+    }
+
+    throw new Exception("Could not find the vendor folder.");
+}
+
+function guessStubPath(string $vendorPath): string
+{
+    $possibleStubPaths = [
+        $vendorPath . '/worksome/phpinsights-coding-style-generator/stubs',
+        __DIR__ . '/../stubs',
+    ];
+
+    foreach ($possibleStubPaths as $possibleStubPath) {
+        if (file_exists("{$possibleStubPath}/config.php")) {
+            return $possibleStubPath;
+        }
+    }
+
+    throw new Exception("Could not find the stub folder.");
+}

@@ -1,0 +1,13 @@
+module.exports = {
+  title: '{{ config.title }}',
+  description: '{{ config.description }}',
+  themeConfig: {
+    sidebar: [
+      {% for group in config.groups %}
+      '/{{ group.toFileName }}',
+      {% endfor %}
+    ],
+    displayAllHeaders: true,
+    smoothScroll: true,
+  },
+}
