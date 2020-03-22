@@ -26,18 +26,37 @@ return [
                             'description' => 'When creating a method the name should always be following camel case naming.',
                         ],
                         \SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class => [
-                            'badCode' => /** @lang PHP */ <<<BAD_CODE
+                            Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE
                             function myMethod() {
                                 return 'works';
                             }
                             BAD_CODE,
-                            'goodCode' => /** @lang PHP */ <<<GOOD_CODE
+                            Property::GOOD_CODE => /** @lang PHP */ <<<GOOD_CODE
                             function myMethod(): string {
                                 return 'works';
                             }
                             GOOD_CODE,
-                            'title' => 'Must declare return type',
-                            'description' => 'Always add return types.',
+                            Property::TITLE => 'Must declare return type',
+                            Property::DESCRIPTION => 'Always add return types.',
+                        ],
+                        \PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer::class => [
+                            Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE
+                            function handle()
+                            {
+                                // Do something
+                            }
+                            BAD_CODE,
+                            Property::GOOD_CODE => /** @lang PHP */ <<<GOOD_CODE
+                            function handle(): void
+                            {
+                                // Do something
+                            }
+                            GOOD_CODE,
+                            Property::TITLE => 'Void return types',
+                            Property::DESCRIPTION => <<<DESC
+                            If a method returns nothing, it should be indicated with `void`.  
+                            This makes it more clear to the users of your code what your intention was when writing it.
+                            DESC,
                         ],
                     ],
                 ],
@@ -79,6 +98,32 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
                                 DESC,
                             ];
                         },
+                    ],
+                ],
+                SubGroup::DOCUMENTATION => [
+                    'insights' => [
+                        \SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff::class => [
+                            Property::TITLE => 'No redundant @param phpdoc annotations',
+                            Property::DESCRIPTION => <<<DESC
+                            If the native method declaration contains everything and the phpDoc does not add anything useful
+                            then the annotation can be removed as it is redundant.
+                            DESC,
+                            Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE
+                            /**
+                             * @param User $user
+                             */
+                            public function handle(User $user): void
+                            {
+                                // Do something on the user
+                            }
+                            BAD_CODE,
+                            Property::GOOD_CODE => /** @lang PHP */ <<<GOOD_CODE
+                            public function handle(User $user): void
+                            {
+                                // Do something on the user
+                            }
+                            GOOD_CODE,
+                        ]
                     ],
                 ],
             ],
