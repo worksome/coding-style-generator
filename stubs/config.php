@@ -78,7 +78,7 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
                                 A line should not be longer than $absoluteLinLimit characters long.
                                 DESC,
                             ];
-                        }
+                        },
                     ],
                 ],
             ],
