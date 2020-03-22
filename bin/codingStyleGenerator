@@ -33,7 +33,8 @@ $allInsights = getInsightsFromConfig($insightConfigPath);
 // Generate content files
 $config = new Configuration(
     require "$stubPath/config.php",
-    require $configPath
+    empty($configPath) ? [] : require $configPath,
+    $allInsights
 );
 
 $loader = new \Twig\Loader\FilesystemLoader($stubPath);
@@ -114,7 +115,6 @@ function getInsightsFromConfig(string $configPath): array
 
 
     $metrics = MetricsFinder::find();
-
     $allInsights = [];
     foreach ($metrics as $metricClass) {
         /** @var HasInsights $metric */
@@ -128,6 +128,17 @@ function getInsightsFromConfig(string $configPath): array
         // Remove insights based on config.
         $allInsights = array_merge($allInsights, array_diff($insights, $phpInsightsConfiguration->getRemoves()));
     }
+
+    // Flip keys/values and set values to empty array
+    $allInsights = array_fill_keys($allInsights, []);
+
+    // Add configuration to insights.
+    foreach ($phpInsightsConfiguration->getConfig() as $insight => $config) {
+        if (isset($allInsights[$insight])) {
+            $allInsights[$insight] = $config;
+        }
+    }
+
     return $allInsights;
 }
 

@@ -10,9 +10,17 @@ class Configuration
 {
     private array $configuration;
 
-    public function __construct(array $defaultConfiguration, array $userConfiguration)
+    public function __construct(array $defaultConfiguration, array $userConfiguration, array $allInsights)
     {
         $this->configuration = self::mergeConfig($defaultConfiguration, $userConfiguration);
+        array_walk_recursive(
+            $this->configuration,
+            function (&$item, string $key) use ($allInsights) {
+                if (!is_array($item) && isset($allInsights[$key])) {
+                    $item = $item($allInsights[$key]);
+                }
+            }
+        );
     }
 
     /**
@@ -22,12 +30,6 @@ class Configuration
     {
         $groups = Collection::make($this->configuration['groups'] ?? []);
         return $groups->mapInto(Group::class);
-    }
-
-    public function getInsights()
-    {
-        $insights = Collection::make($this->configuration->get('insights', []));
-        return $insights->mapInto(CodingStyleInsight::class);
     }
 
     public function getTitle(): string

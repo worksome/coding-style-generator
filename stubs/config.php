@@ -3,7 +3,6 @@
 use Worksome\CodingStyleGenerator\Contracts\Group;
 use Worksome\CodingStyleGenerator\Contracts\Property;
 use Worksome\CodingStyleGenerator\Contracts\SubGroup;
-
 return [
     'title' => 'Php Insights generated coding style',
     'description' => 'Auto generated coding style by PHP Insights',
@@ -71,6 +70,15 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
 
 
                         ],
+                        \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => function ($configuration) {
+                            $absoluteLinLimit = $configuration['absoluteLineLimit'] ?? 80;
+                            return [
+                                Property::TITLE => 'Max length of lines',
+                                Property::DESCRIPTION => <<<DESC
+                                A line should not be longer than $absoluteLinLimit characters long.
+                                DESC,
+                            ];
+                        }
                     ],
                 ],
             ],

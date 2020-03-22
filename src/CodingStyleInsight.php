@@ -12,10 +12,10 @@ class CodingStyleInsight
 
     private array $configuration;
 
-    public function __construct(array $configuration, string $name)
+    public function __construct($configuration, string $name)
     {
         $this->name = $name;
-        $this->configuration = $configuration;
+        $this->configuration = is_array($configuration) ? $configuration : $configuration();
     }
 
     /**
