@@ -58,6 +58,32 @@ return [
                             This makes it more clear to the users of your code what your intention was when writing it.
                             DESC,
                         ],
+                        'Required visibility' => [
+                            Property::INSIGHT => \PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer::class,
+                            Property::DESCRIPTION => <<<DESC
+                            When defining a method, the visibility must be declared also.  
+                            - `abstract` and `final` MUST be declared before the visibility
+                            - `static` MUST be declared after the visibility.
+                            DESC,
+                            Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE
+                            class Example
+                            {
+                                static final function works(): void
+                                {
+                                    // Work work...
+                                }
+                            }
+                            BAD_CODE,
+                            Property::GOOD_CODE => /** @lang PHP */ <<<GOOD_CODE
+                            class Example
+                            {
+                                final public static function works(): void
+                                {
+                                    // Work work...
+                                }
+                            }
+                            GOOD_CODE,
+                        ],
                     ],
                 ],
                 SubGroup::CODE => [
@@ -86,8 +112,6 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
                             // Or
                             \$array = ['test' => 'bad'];
                             GOOD_CODE,
-
-
                         ],
                         'Max length of lines' => function ($configuration) {
                             $configuration = $configuration[\PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class] ?? [];
