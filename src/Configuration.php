@@ -4,6 +4,7 @@
 namespace Worksome\CodingStyleGenerator;
 
 
+use Closure;
 use Tightenco\Collect\Support\Collection;
 
 class Configuration
@@ -16,8 +17,8 @@ class Configuration
         array_walk_recursive(
             $this->configuration,
             function (&$item, string $key) use ($allInsights) {
-                if (!is_array($item) && isset($allInsights[$key])) {
-                    $item = $item($allInsights[$key]);
+                if ($item instanceof Closure) {
+                    $item = $item($allInsights);
                 }
             }
         );

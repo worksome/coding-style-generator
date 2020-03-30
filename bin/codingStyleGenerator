@@ -42,6 +42,7 @@ $twig = new \Twig\Environment($loader, ['debug' => true]);
 $twig->addExtension(new \Twig\Extension\DebugExtension);
 
 $template = $twig->load('group.md.twig');
+$allInsights = array_keys($allInsights);
 
 $config->getGroups()->each(function (Group $group) use ($template, $allInsights, $outputPath) {
     $file = fopen("{$outputPath}/{$group->toFileName()}.md", 'w');
@@ -108,8 +109,11 @@ function getInsightsFromConfig(string $configPath): array
         AnalyseDefinition::get()
     );
 
+    $configPath = ConfigResolver::resolvePath($phpInsightsInput);
+
+
     $phpInsightsConfiguration = ConfigResolver::resolve(
-        require ConfigResolver::resolvePath($phpInsightsInput),
+        $configPath === '' ? [] : require $configPath,
         $phpInsightsInput
     );
 

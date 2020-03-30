@@ -11,21 +11,21 @@ return [
             'groups' => [
                 SubGroup::FUNCTIONS => [
                     'insights' => [
-                        \PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff::class => [
-                            'badCode' => /** @lang PHP */ <<<BAD_CODE
+                        'Camel case naming' => [
+                            Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE
                             function my_private_method() {
                                 return 'private';
                             }
                             BAD_CODE,
-                            'goodCode' => /** @lang PHP */ <<<GOOD_CODE
+                            Property::GOOD_CODE => /** @lang PHP */ <<<GOOD_CODE
                             function myPrivateMethod() {
                                 return 'private';
                             }
                             GOOD_CODE,
-                            'title' => 'Camel case naming',
-                            'description' => 'When creating a method the name should always be following camel case naming.',
+                            Property::INSIGHT => \PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff::class ,
+                            Property::DESCRIPTION => 'When creating a method the name should always be following camel case naming.',
                         ],
-                        \SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class => [
+                        'Must declare return type' => [
                             Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE
                             function myMethod() {
                                 return 'works';
@@ -36,10 +36,10 @@ return [
                                 return 'works';
                             }
                             GOOD_CODE,
-                            Property::TITLE => 'Must declare return type',
+                            Property::INSIGHT => \SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class,
                             Property::DESCRIPTION => 'Always add return types.',
                         ],
-                        \PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer::class => [
+                        'Void return types' => [
                             Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE
                             function handle()
                             {
@@ -52,7 +52,7 @@ return [
                                 // Do something
                             }
                             GOOD_CODE,
-                            Property::TITLE => 'Void return types',
+                            Property::INSIGHT => \PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer::class,
                             Property::DESCRIPTION => <<<DESC
                             If a method returns nothing, it should be indicated with `void`.  
                             This makes it more clear to the users of your code what your intention was when writing it.
@@ -62,13 +62,13 @@ return [
                 ],
                 SubGroup::CODE => [
                     'insights' => [
-                        \SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class => [
-                            'title' => 'Declare strict',
-                            'description' => 'It is recommended to add `declare(strict_types=1)` as it can fix some unexpected results when type hinting.  
+                        'Declare strict' => [
+                            Property::INSIGHT => \SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class,
+                            Property::DESCRIPTION => 'It is recommended to add `declare(strict_types=1)` as it can fix some unexpected results when type hinting.  
 Without strict it allows type coercion, meaning `bool` will be casted to `int` for example.',
                         ],
-                        \SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff::class => [
-                            Property::TITLE => 'Trailing commas on arrays',
+                        'Trailing commas on arrays' => [
+                            Property::INSIGHT => \SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff::class,
                             Property::DESCRIPTION => <<<DESC
                             When defining an array, we should always have a trailing comma as long as the array is multiple lines.  
                             When dealing with single line arrays, it is not required, however is allowed.
@@ -89,10 +89,11 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
 
 
                         ],
-                        \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => function ($configuration) {
+                        'Max length of lines' => function ($configuration) {
+                            $configuration = $configuration[\PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class] ?? [];
                             $absoluteLinLimit = $configuration['absoluteLineLimit'] ?? 80;
                             return [
-                                Property::TITLE => 'Max length of lines',
+                                Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class,
                                 Property::DESCRIPTION => <<<DESC
                                 A line should not be longer than $absoluteLinLimit characters long.
                                 DESC,
@@ -102,23 +103,23 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
                 ],
                 SubGroup::DOCUMENTATION => [
                     'insights' => [
-                        \SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff::class => [
-                            Property::TITLE => 'No redundant @param phpdoc annotations',
+                        'No redundant @param phpdoc annotations' => [
+                            Property::INSIGHT => \SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff::class,
                             Property::DESCRIPTION => <<<DESC
                             If the native method declaration contains everything and the phpDoc does not add anything useful
                             then the annotation can be removed as it is redundant.
                             DESC,
                             Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE
                             /**
-                             * @param User $user
+                             * @param User \$user
                              */
-                            public function handle(User $user): void
+                            public function handle(User \$user): void
                             {
                                 // Do something on the user
                             }
                             BAD_CODE,
                             Property::GOOD_CODE => /** @lang PHP */ <<<GOOD_CODE
-                            public function handle(User $user): void
+                            public function handle(User \$user): void
                             {
                                 // Do something on the user
                             }
@@ -132,8 +133,8 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
             'groups' => [
                 SubGroup::FUNCTIONS => [
                     'insights' => [
-                        \PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff::class => [
-                            'title' => 'Disallow debug methods',
+                        'Disallow debug methods' => [
+                            'title' => \PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff::class,
                             'description' => 'Usage of `dd`, `ddd`, `dump` and `tinker` is not allowed.',
                         ],
                     ],

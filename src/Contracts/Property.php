@@ -6,7 +6,7 @@ namespace Worksome\CodingStyleGenerator\Contracts;
 
 final class Property
 {
-    public const TITLE = 'title';
+    public const INSIGHT = 'insight';
     public const GOOD_CODE = 'goodCode';
     public const BAD_CODE = 'badCode';
     public const DESCRIPTION = 'description';

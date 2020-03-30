@@ -12,10 +12,10 @@ class CodingStyleInsight
 
     private array $configuration;
 
-    public function __construct($configuration, string $name)
+    public function __construct(array $configuration, string $name)
     {
         $this->name = $name;
-        $this->configuration = is_array($configuration) ? $configuration : $configuration();
+        $this->configuration = $configuration;
     }
 
     /**
@@ -26,29 +26,39 @@ class CodingStyleInsight
         return $this->configuration;
     }
 
+    public function getInsight(): string
+    {
+        return $this->configuration[Property::INSIGHT] ?? '';
+    }
+
+    public function hasInsight(): bool
+    {
+        return isset($this->configuration[Property::INSIGHT]);
+    }
+
     public function getTitle(): string
     {
-        return $this->configuration['title'] ?? $this->name;
+        return $this->name;
     }
 
     public function getGoodCode(): string
     {
-        return $this->configuration['goodCode'];
+        return $this->configuration[Property::GOOD_CODE];
     }
 
     public function hasGoodCode(): bool
     {
-        return isset($this->configuration['goodCode']);
+        return isset($this->configuration[Property::GOOD_CODE]);
     }
 
     public function getBadCode(): string
     {
-        return $this->configuration['badCode'];
+        return $this->configuration[Property::BAD_CODE];
     }
 
     public function hasBadCode(): bool
     {
-        return isset($this->configuration['badCode']);
+        return isset($this->configuration[Property::BAD_CODE]);
     }
 
     public function getName(): string
@@ -58,12 +68,12 @@ class CodingStyleInsight
 
     public function getDescription(): string
     {
-        return $this->configuration['description'];
+        return $this->configuration[Property::DESCRIPTION];
     }
 
     public function hasDescription(): bool
     {
-        return isset($this->configuration['description']);
+        return isset($this->configuration[Property::DESCRIPTION]);
     }
 
     public function alwaysShow(): bool
