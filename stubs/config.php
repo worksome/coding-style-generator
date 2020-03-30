@@ -134,8 +134,8 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
                 SubGroup::FUNCTIONS => [
                     'insights' => [
                         'Disallow debug methods' => [
-                            'title' => \PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff::class,
-                            'description' => 'Usage of `dd`, `ddd`, `dump` and `tinker` is not allowed.',
+                            Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff::class,
+                            Property::DESCRIPTION => 'Usage of `dd`, `ddd`, `dump` and `tinker` is not allowed.',
                         ],
                     ],
                 ],
