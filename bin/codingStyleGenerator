@@ -45,7 +45,12 @@ $template = $twig->load('group.md.twig');
 $allInsights = array_keys($allInsights);
 
 $config->getGroups()->each(function (Group $group) use ($template, $allInsights, $outputPath) {
-    $file = fopen("{$outputPath}/{$group->toFileName()}.md", 'w');
+    $folder = "{$outputPath}/generated";
+    if (!file_exists($folder)) {
+        mkdir($folder);
+    }
+
+    $file = fopen("{$folder}/{$group->toFileName()}.md", 'w');
 
     if ($file === false) {
         throw new Exception("Couldn't create file.");
@@ -56,7 +61,7 @@ $config->getGroups()->each(function (Group $group) use ($template, $allInsights,
     );
 
     fclose($file);
-    echo "Generated {$outputPath}/{$group->toFileName()}.md\n";
+    echo "Generated {$folder}/{$group->toFileName()}.md\n";
 });
 
 // Generate stub files.

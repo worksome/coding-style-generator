@@ -4,7 +4,7 @@ module.exports = {
   themeConfig: {
     sidebar: [
       {% for group in config.groups %}
-      '/{{ group.toFileName }}',
+      '/generated/{{ group.toFileName }}',
       {% endfor %}
     ],
     displayAllHeaders: true,
