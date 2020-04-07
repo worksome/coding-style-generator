@@ -108,7 +108,7 @@ function getInsightsFromConfig(string $configPath): array
 {
     $phpInsightsInput = new ArrayInput(
         [
-            'directories' => [getcwd()],
+            'paths' => [getcwd()],
             '--config-path' => $configPath,
         ],
         AnalyseDefinition::get()
