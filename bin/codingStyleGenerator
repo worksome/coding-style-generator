@@ -108,7 +108,7 @@ function getInsightsFromConfig(string $configPath): array
 {
     $phpInsightsInput = new ArrayInput(
         [
-            'directory' => getcwd(),
+            'directories' => [getcwd()],
             '--config-path' => $configPath,
         ],
         AnalyseDefinition::get()
@@ -116,12 +116,10 @@ function getInsightsFromConfig(string $configPath): array
 
     $configPath = ConfigResolver::resolvePath($phpInsightsInput);
 
-
     $phpInsightsConfiguration = ConfigResolver::resolve(
         $configPath === '' ? [] : require $configPath,
         $phpInsightsInput
     );
-
 
     $metrics = MetricsFinder::find();
     $allInsights = [];
