@@ -2,6 +2,7 @@
     "name": "worksome/phpinsights-coding-style-generator",
     "description": "Generate a coding style from a php insights configuration file",
     "type": "library",
+    "license": "MIT",
     "require": {
         "nunomaduro/phpinsights": "dev-master",
         "symfony/var-dumper": "^5.0",
