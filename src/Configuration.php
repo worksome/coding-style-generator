@@ -19,7 +19,13 @@ class Configuration
         $this->configuration = self::mergeConfig($defaultConfiguration, $userConfiguration);
         $this->enabledInsights = $phpInsightConfiguration->getInsights();
 
-        foreach ($this->configuration['groups'] as $groupName => ['groups' => $subGroups]) {
+        foreach ($this->configuration['groups'] as $groupName => ['groups' => $subGroups, 'preset' => $preset]) {
+            // SKip groups which has not been enabled.
+            if ($preset !== null && $preset !== $phpInsightConfiguration->getPreset()) {
+                unset($this->configuration['groups'][$groupName]);
+                continue;
+            }
+
             foreach ($subGroups as $subGroupName => ['insights' => $insights]) {
                 foreach ($insights as $insightTitle => $data) {
                     if ($data instanceof Closure) {

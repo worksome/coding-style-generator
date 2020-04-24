@@ -9,6 +9,7 @@ return [
     'description' => 'Auto generated coding style by PHP Insights',
     'groups' => [
         Group::GENERIC_PHP => [
+            'preset' => null,
             'groups' => [
                 SubGroup::FUNCTIONS => [
                     'insights' => [
@@ -155,6 +156,7 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
             ],
         ],
         Group::LARAVEL => [
+            'preset' => \NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset::getName(),
             'groups' => [
                 SubGroup::FUNCTIONS => [
                     'insights' => [

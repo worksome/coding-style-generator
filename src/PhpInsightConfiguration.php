@@ -65,4 +65,9 @@ class PhpInsightConfiguration
         return $allInsights;
     }
 
+    public function getPreset(): string
+    {
+        return $this->phpInsightsConfiguration->getPreset();
+    }
+
 }
