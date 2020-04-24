@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Generic PHP | Php Insights generated coding style</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    
+    <meta name="description" content="Auto generated coding style by PHP Insights">
+    <link rel="preload" href="/assets/css/0.styles.f317dd00.css" as="style"><link rel="preload" href="/assets/js/app.eda5d80b.js" as="script"><link rel="preload" href="/assets/js/2.6826b1d4.js" as="script"><link rel="preload" href="/assets/js/7.8b2054e3.js" as="script"><link rel="prefetch" href="/assets/js/3.76cdacb9.js"><link rel="prefetch" href="/assets/js/4.7ee9296e.js"><link rel="prefetch" href="/assets/js/5.90924bd9.js"><link rel="prefetch" href="/assets/js/6.1823d492.js"><link rel="prefetch" href="/assets/js/8.2004a7a4.js"><link rel="prefetch" href="/assets/js/9.13158ce3.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f317dd00.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Php Insights generated coding style</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/generated/generic-php.html" class="active sidebar-link">Generic PHP</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/generated/generic-php.html#functions" class="sidebar-link">Functions</a></li><li class="sidebar-sub-header"><a href="/generated/generic-php.html#code" class="sidebar-link">Code</a></li><li class="sidebar-sub-header"><a href="/generated/generic-php.html#documentation" class="sidebar-link">Documentation</a></li></ul></li><li><a href="/generated/laravel.html" class="sidebar-link">Laravel</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/generated/laravel.html#functions" class="sidebar-link">Functions</a></li></ul></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="generic-php"><a href="#generic-php" class="header-anchor">#</a> Generic PHP</h1> <h2 id="functions"><a href="#functions" class="header-anchor">#</a> Functions</h2> <h3 id="camel-case-naming"><a href="#camel-case-naming" class="header-anchor">#</a> Camel case naming</h3> <p>When creating a method the name should always be following camel case naming.</p> <div class="custom-block danger"><p class="custom-block-title">Bad</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">function</span> <span class="token function">my_private_method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token single-quoted-string string">'private'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <div class="custom-block tip"><p class="custom-block-title">Good</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">function</span> <span class="token function">myPrivateMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token single-quoted-string string">'private'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <h3 id="must-declare-return-type"><a href="#must-declare-return-type" class="header-anchor">#</a> Must declare return type</h3> <p>Always add return types.</p> <div class="custom-block danger"><p class="custom-block-title">Bad</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">function</span> <span class="token function">myMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token single-quoted-string string">'works'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <div class="custom-block tip"><p class="custom-block-title">Good</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">function</span> <span class="token function">myMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> string <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token single-quoted-string string">'works'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <h3 id="void-return-types"><a href="#void-return-types" class="header-anchor">#</a> Void return types</h3> <p>If a method returns nothing, it should be indicated with <code>void</code>.<br>
+This makes it more clear to the users of your code what your intention was when writing it.</p> <div class="custom-block danger"><p class="custom-block-title">Bad</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Do something</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <div class="custom-block tip"><p class="custom-block-title">Good</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> void
+<span class="token punctuation">{</span>
+    <span class="token comment">// Do something</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <h3 id="required-visibility"><a href="#required-visibility" class="header-anchor">#</a> Required visibility</h3> <p>When defining a method, the visibility must be declared also.</p> <ul><li><code>abstract</code> and <code>final</code> MUST be declared before the visibility</li> <li><code>static</code> MUST be declared after the visibility.</li></ul> <div class="custom-block danger"><p class="custom-block-title">Bad</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">class</span> <span class="token class-name">Example</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">function</span> <span class="token function">works</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> void
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Work work...</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <div class="custom-block tip"><p class="custom-block-title">Good</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">class</span> <span class="token class-name">Example</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">final</span> <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">function</span> <span class="token function">works</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> void
+    <span class="token punctuation">{</span>
+        <span class="token comment">// Work work...</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <h2 id="code"><a href="#code" class="header-anchor">#</a> Code</h2> <h3 id="declare-strict"><a href="#declare-strict" class="header-anchor">#</a> Declare strict</h3> <p>It is recommended to add <code>declare(strict_types=1)</code> as it can fix some unexpected results when type hinting.<br>
+Without strict it allows type coercion, meaning <code>bool</code> will be casted to <code>int</code> for example.</p> <h3 id="trailing-commas-on-arrays"><a href="#trailing-commas-on-arrays" class="header-anchor">#</a> Trailing commas on arrays</h3> <p>When defining an array, we should always have a trailing comma as long as the array is multiple lines.<br>
+When dealing with single line arrays, it is not required, however is allowed.</p> <div class="custom-block danger"><p class="custom-block-title">Bad</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token variable">$array</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token single-quoted-string string">'test'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token single-quoted-string string">'bad'</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre></div></div> <div class="custom-block tip"><p class="custom-block-title">Good</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token variable">$array</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token single-quoted-string string">'test'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token single-quoted-string string">'bad'</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Or</span>
+<span class="token variable">$array</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token single-quoted-string string">'test'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token single-quoted-string string">'bad'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre></div></div> <h3 id="max-length-of-lines"><a href="#max-length-of-lines" class="header-anchor">#</a> Max length of lines</h3> <p>A line should not be longer than 80 characters long.</p> <h2 id="documentation"><a href="#documentation" class="header-anchor">#</a> Documentation</h2> <h3 id="no-redundant-param-phpdoc-annotations"><a href="#no-redundant-param-phpdoc-annotations" class="header-anchor">#</a> No redundant @param phpdoc annotations</h3> <p>If the native method declaration contains everything and the phpDoc does not add anything useful
+then the annotation can be removed as it is redundant.</p> <div class="custom-block danger"><p class="custom-block-title">Bad</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token comment">/**
+ * @param User $user
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span>User <span class="token variable">$user</span><span class="token punctuation">)</span><span class="token punctuation">:</span> void
+<span class="token punctuation">{</span>
+    <span class="token comment">// Do something on the user</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <div class="custom-block tip"><p class="custom-block-title">Good</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span>User <span class="token variable">$user</span><span class="token punctuation">)</span><span class="token punctuation">:</span> void
+<span class="token punctuation">{</span>
+    <span class="token comment">// Do something on the user</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/generated/laravel.html">
+        Laravel
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.eda5d80b.js" defer></script><script src="/assets/js/2.6826b1d4.js" defer></script><script src="/assets/js/7.8b2054e3.js" defer></script>
+  </body>
+</html>
