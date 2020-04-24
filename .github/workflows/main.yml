@@ -1,0 +1,30 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Composer install
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: generate coding style
+        run: bin/codingStyleGenerator
+
+      - name: Npm install
+        run: npm install --prefix docs
+
+      - name: Build Vuepress
+        run: npm run docs:build --prefix docs
+
+      - name: Deploy to GitHub pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/.vuepress/dist
