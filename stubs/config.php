@@ -3,6 +3,7 @@
 use Worksome\CodingStyleGenerator\Contracts\Group;
 use Worksome\CodingStyleGenerator\Contracts\Property;
 use Worksome\CodingStyleGenerator\Contracts\SubGroup;
+
 return [
     'title' => 'Php Insights generated coding style',
     'description' => 'Auto generated coding style by PHP Insights',

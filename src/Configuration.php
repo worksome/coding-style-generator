@@ -10,18 +10,29 @@ use Tightenco\Collect\Support\Collection;
 class Configuration
 {
     private array $configuration;
+    private array $enabledInsights;
 
-    public function __construct(array $defaultConfiguration, array $userConfiguration, array $allInsights)
+    public function __construct(array $defaultConfiguration,
+                                array $userConfiguration,
+                                PhpInsightConfiguration $phpInsightConfiguration)
     {
         $this->configuration = self::mergeConfig($defaultConfiguration, $userConfiguration);
-        array_walk_recursive(
-            $this->configuration,
-            function (&$item, string $key) use ($allInsights) {
-                if ($item instanceof Closure) {
-                    $item = $item($allInsights);
+        $this->enabledInsights = $phpInsightConfiguration->getInsights();
+
+        foreach ($this->configuration['groups'] as $groupName => ['groups' => $subGroups]) {
+            foreach ($subGroups as $subGroupName => ['insights' => $insights]) {
+                foreach ($insights as $insightTitle => $data) {
+                    if ($data instanceof Closure) {
+                        $data = $data($this->enabledInsights);
+                        $this->configuration['groups'][$groupName]['groups'][$subGroupName]['insights'][$insightTitle] = $data;
+                    }
+
+                    if (isset($data['insight']) && !key_exists($data['insight'], $this->enabledInsights)) {
+                        unset($this->configuration['groups'][$groupName]['groups'][$subGroupName]['insights'][$insightTitle]);
+                    }
                 }
             }
-        );
+        }
     }
 
     /**
@@ -46,5 +57,10 @@ class Configuration
     private static function mergeConfig(array $defaultConfiguration, array $userConfiguration): array
     {
         return array_merge_recursive($defaultConfiguration, $userConfiguration);
+    }
+
+    public function getEnabledInsights(): array
+    {
+        return $this->enabledInsights;
     }
 }
