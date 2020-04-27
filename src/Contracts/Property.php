@@ -10,5 +10,4 @@ final class Property
     public const GOOD_CODE = 'goodCode';
     public const BAD_CODE = 'badCode';
     public const DESCRIPTION = 'description';
-    public const ALWAYS_SHOW = 'alwaysShow';
 }

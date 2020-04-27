@@ -88,6 +88,65 @@ return [
                             }
                             GOOD_CODE,
                         ],
+                        'Max line length of functions' => function ($configuration) {
+                            $configuration = $configuration[\ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff::class] ?? [];
+                            $maxLines = $configuration['maxLength'] ?? (new \ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff)->maxLength;
+                            return [
+                                Property::INSIGHT => \ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff::class,
+                                Property::DESCRIPTION => <<<DESC
+                                A function should not be longer than $maxLines lines long.
+                                DESC,
+                            ];
+                        },
+                    ],
+                ],
+                SubGroup::CLASSES => [
+                    Property::DESCRIPTION => 'All the rules specific for a class will be listed here.',
+                    'insights' => [
+                        'One class per file' => [
+                            Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff::class,
+                            Property::DESCRIPTION => <<<DESC
+                            There should only be one class per file. This helps simplify the files and makes finding a
+                            class faster.
+                            DESC,
+                        ],
+                        'One interface per file' => [
+                            Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneInterfacePerFileSniff::class,
+
+                        ],
+                        'One trait per file' => [
+                            Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneTraitPerFileSniff::class,
+                        ],
+                        'Max properties in a class' => function ($configuration) {
+                            $configuration = $configuration[\ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff::class] ?? [];
+                            $maxProperties = $configuration['maxCount'] ?? (new \ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff)->maxCount;
+                            return [
+                                Property::INSIGHT => \ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff::class,
+                                Property::DESCRIPTION => <<<DESC
+                                A class should not contain more than $maxProperties properties.
+                                DESC,
+                            ];
+                        },
+                        'Max methods in a class' => function ($configuration) {
+                            $configuration = $configuration[\ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff::class] ?? [];
+                            $maxMethods = $configuration['maxCount'] ?? (new \ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff)->maxCount;
+                            return [
+                                Property::INSIGHT => \ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff::class,
+                                Property::DESCRIPTION => <<<DESC
+                                A class should not contain more than $maxMethods methods.
+                                DESC,
+                            ];
+                        },
+                        'Max line length of classes, traits and interfaces' => function ($configuration) {
+                            $configuration = $configuration[\ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff::class] ?? [];
+                            $maxLines = $configuration['maxLength'] ?? (new \ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff)->maxLength;
+                            return [
+                                Property::INSIGHT => \ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff::class,
+                                Property::DESCRIPTION => <<<DESC
+                                A class, interface of trait should not be longer than $maxLines lines long.
+                                DESC,
+                            ];
+                        },
                     ],
                 ],
                 SubGroup::CODE => [
@@ -119,11 +178,11 @@ Without strict it allows type coercion, meaning `bool` will be casted to `int` f
                         ],
                         'Max length of lines' => function ($configuration) {
                             $configuration = $configuration[\PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class] ?? [];
-                            $absoluteLinLimit = $configuration['absoluteLineLimit'] ?? 80;
+                            $absoluteLineLimit = $configuration['absoluteLineLimit'] ?? 80;
                             return [
                                 Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class,
                                 Property::DESCRIPTION => <<<DESC
-                                A line should not be longer than $absoluteLinLimit characters long.
+                                A line should not be longer than $absoluteLineLimit characters long.
                                 DESC,
                             ];
                         },
