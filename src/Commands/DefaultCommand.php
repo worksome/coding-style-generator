@@ -21,7 +21,7 @@ class DefaultCommand extends Command
 
     public function __construct(Generator $generator)
     {
-        parent::__construct('action:run');
+        parent::__construct('generate');
 
         $this->generator = $generator;
     }

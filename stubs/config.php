@@ -9,9 +9,11 @@ return [
     'description' => 'Auto generated coding style by PHP Insights',
     'groups' => [
         Group::GENERIC_PHP => [
+            Property::DESCRIPTION => 'All the rules listed here applies in general to all PHP code.',
             'preset' => null,
             'groups' => [
                 SubGroup::FUNCTIONS => [
+                    Property::DESCRIPTION => 'These are the rules which are related to a function or method.',
                     'insights' => [
                         'Camel case naming' => [
                             Property::BAD_CODE => /** @lang PHP */ <<<BAD_CODE

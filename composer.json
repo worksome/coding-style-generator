@@ -4,6 +4,7 @@
     "type": "library",
     "license": "MIT",
     "require": {
+        "php": "^7.4",
         "nunomaduro/phpinsights": "dev-master",
         "symfony/var-dumper": "^5.0",
         "tightenco/collect": "^7.0",

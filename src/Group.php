@@ -31,6 +31,11 @@ class Group
         return $this->name;
     }
 
+    public function getDescription(): string
+    {
+        return  $this->configuration['description'] ?? '';
+    }
+
     public function getSubGroups()
     {
         $groups = Collection::make($this->configuration['groups'] ?? []);

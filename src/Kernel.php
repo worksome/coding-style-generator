@@ -30,9 +30,9 @@ class Kernel
         $kernelApplication = new \Symfony\Component\Console\Application('PHP Insights App');
 
         $kernelApplication->setCommandLoader(new ContainerCommandLoader($this->container, [
-            'action:run' => DefaultCommand::class,
+            'generate' => DefaultCommand::class,
         ]));
-        $kernelApplication->setDefaultCommand('action:run', true);
+        $kernelApplication->setDefaultCommand('generate', true);
 
         return $kernelApplication->run($input, $output);
     }
