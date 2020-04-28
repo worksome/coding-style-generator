@@ -1,0 +1,8 @@
+name: 'PHP Insights Coding Style generator'
+description: 'Generates a coding style website based on PHP Insights'
+branding:
+  icon: 'book'
+  color: 'green'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

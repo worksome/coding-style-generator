@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and deploy coding dtyle
 on:
   push:
     branches:
@@ -8,14 +8,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
-
-      - name: Composer install
-        run: composer install --prefer-dist --no-progress --no-suggest
-
       - name: generate coding style
-        run: bin/codingStyleGenerator
+        uses: ./ # Use github action from this repo.
 
       - name: Npm install
         run: npm install --prefix docs

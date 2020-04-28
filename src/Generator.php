@@ -27,8 +27,7 @@ class Generator
     public function __construct(string $stubPath = Kernel::STUB_PATH)
     {
         $loader = new FilesystemLoader($stubPath);
-        $twig = new Environment($loader, ['debug' => true]);
-        $twig->addExtension(new DebugExtension);
+        $twig = new Environment($loader);
 
         $this->twig = $twig;
     }
