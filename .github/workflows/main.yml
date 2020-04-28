@@ -14,12 +14,6 @@ jobs:
       - name: generate coding style
         uses: ./ # Use github action from this repo.
 
-      - name: pwd
-        run: pwd && ls -la
-
-      - name: ls docs
-        run: ls -la docs
-
       - name: Deploy to GitHub pages
         uses: peaceiris/actions-gh-pages@v3
         with:

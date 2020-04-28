@@ -5,7 +5,7 @@ if [ -z $INPUT_MEMORY_LIMIT ]; then
 fi
 
 if [ -z $INPUT_OUTPUT_DIR ]; then
-  $INPUT_OUTPUT_DIR="docs"
+  INPUT_OUTPUT_DIR="docs"
 fi
 
 php -d memory_limit=$INPUT_MEMORY_LIMIT /generator/codingStyleGenerator.phar $INPUT_OUTPUT_DIR $*
