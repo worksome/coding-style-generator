@@ -14,11 +14,11 @@ jobs:
       - name: generate coding style
         uses: ./ # Use github action from this repo.
 
-      - name: Npm install
-        run: npm install --prefix docs
-
       - name: pwd
         run: pwd && ls && la
+
+      - name: Npm install
+        run: npm install --prefix docs
 
       - name: Build Vuepress
         run: npm run docs:build --prefix docs
