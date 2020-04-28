@@ -15,7 +15,10 @@ jobs:
         uses: ./ # Use github action from this repo.
 
       - name: pwd
-        run: pwd && ls && ls docs
+        run: pwd && ls -la
+
+      - name: ls docs
+        run: ls -la docs
 
       - name: Npm install
         run: npm install --prefix docs
