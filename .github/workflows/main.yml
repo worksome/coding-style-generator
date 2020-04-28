@@ -17,6 +17,9 @@ jobs:
       - name: Npm install
         run: npm install --prefix docs
 
+      - name: pwd
+        run: pwd && ls && la
+
       - name: Build Vuepress
         run: npm run docs:build --prefix docs
 
