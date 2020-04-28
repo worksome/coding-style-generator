@@ -1,4 +1,4 @@
-### {{insight.title}} {% if insight.hasInsight and insight.insight in supportedInsights %}<AutoChecked/>{% endif %}
+### {{insight.title}} {% if insight.isAutoChecked %}<AutoChecked/>{% endif %}
 
 {% if insight.hasDescription %}
 {{insight.description|raw}}

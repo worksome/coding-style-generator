@@ -36,6 +36,11 @@ class CodingStyleInsight
         return isset($this->configuration[Property::INSIGHT]);
     }
 
+    public function isAutoChecked(): bool
+    {
+        return $this->hasInsight() || ($this->configuration[Property::AUTO_CHECKED] ?? false);
+    }
+
     public function getTitle(): string
     {
         return $this->name;

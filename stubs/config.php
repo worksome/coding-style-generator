@@ -103,20 +103,34 @@ return [
                 SubGroup::CLASSES => [
                     Property::DESCRIPTION => 'All the rules specific for a class will be listed here.',
                     'insights' => [
-                        'One class per file' => [
-                            Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff::class,
-                            Property::DESCRIPTION => <<<DESC
-                            There should only be one class per file. This helps simplify the files and makes finding a
-                            class faster.
-                            DESC,
-                        ],
-                        'One interface per file' => [
-                            Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneInterfacePerFileSniff::class,
+                        'One class per file' => function ($configuration) {
+                            $enabled = [];
 
-                        ],
-                        'One trait per file' => [
-                            Property::INSIGHT => \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneTraitPerFileSniff::class,
-                        ],
+                            if (isset($configuration[\PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff::class])) {
+                                $enabled[] = 'class';
+                            }
+
+                            if (isset($configuration[\PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneInterfacePerFileSniff::class])) {
+                                $enabled[] = 'interface';
+                            }
+
+                            if (isset($configuration[\PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneTraitPerFileSniff::class])) {
+                                $enabled[] = 'trait';
+                            }
+
+                            if ($enabled === []) {
+                                return [];
+                            }
+
+                            $typesString = implode(', ', $enabled);
+                            return [
+                                Property::AUTO_CHECKED => true,
+                                Property::DESCRIPTION => <<<DESC
+                                There should only be one $typesString per file. This helps simplify the files and makes finding a
+                                class faster.
+                                DESC,
+                            ];
+                        },
                         'Max properties in a class' => function ($configuration) {
                             $configuration = $configuration[\ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff::class] ?? [];
                             $maxProperties = $configuration['maxCount'] ?? (new \ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff)->maxCount;
