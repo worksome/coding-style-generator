@@ -12,7 +12,8 @@ RUN php box.phar compile
 
 FROM php:7.4-alpine
 
-RUN apk --no-cache add git
+RUN apk --no-cache add npm
+RUN npm install -g vuepress
 COPY entrypoint.sh /entrypoint.sh
 COPY --from=0 /generator/codingStyleGenerator.phar /generator/codingStyleGenerator.phar
 WORKDIR /

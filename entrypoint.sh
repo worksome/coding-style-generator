@@ -5,3 +5,5 @@ if [ -z $INPUT_MEMORY_LIMIT ]; then
 fi
 
 php -d memory_limit=$INPUT_MEMORY_LIMIT /generator/codingStyleGenerator.phar $INPUT_OUTPUT_DIR $*
+
+vuepress build $INPUT_OUTPUT_DIR

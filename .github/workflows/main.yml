@@ -20,12 +20,6 @@ jobs:
       - name: ls docs
         run: ls -la docs
 
-      - name: Npm install
-        run: sudo npm install --prefix docs
-
-      - name: Build Vuepress
-        run: sudo npm run docs:build --prefix docs
-
       - name: Deploy to GitHub pages
         uses: peaceiris/actions-gh-pages@v3
         with:
