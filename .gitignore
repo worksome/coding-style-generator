@@ -2,3 +2,4 @@
 composer.lock
 /out
 /docs
+box.phar
