@@ -38,7 +38,7 @@ class Generator
     {
         // Create output folder
         if (!file_exists($outputPath)) {
-            mkdir($outputPath);
+            mkdir($outputPath, 777);
         }
 
         $this->generateStubFiles($output, $outputPath, $config);
@@ -60,7 +60,7 @@ class Generator
 
             // Check if it's a directory.
             if (substr($dest, -1) === '/') {
-                mkdir($dest);
+                mkdir($dest, 777);
                 continue;
             }
 
