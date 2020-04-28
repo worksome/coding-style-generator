@@ -3,7 +3,11 @@
     "directories": [
         "vendor/friendsofphp",
         "stubs",
+        "stubs/vuepress/.vuepress",
         "vendor/twig/twig/src"
+    ],
+    "files": [
+        "stubs/vuepress/.gitignore.twig"
     ],
     "force-autodiscovery": true,
     "output": "codingStyleGenerator.phar",
