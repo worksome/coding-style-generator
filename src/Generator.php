@@ -38,7 +38,7 @@ class Generator
     {
         // Create output folder
         if (!file_exists($outputPath)) {
-            mkdir($outputPath, 777);
+            mkdir($outputPath, 0777);
         }
 
         $this->generateStubFiles($output, $outputPath, $config);
@@ -60,7 +60,7 @@ class Generator
 
             // Check if it's a directory.
             if (substr($dest, -1) === '/') {
-                mkdir($dest, 777);
+                mkdir($dest, 0777);
                 continue;
             }
 
@@ -72,6 +72,7 @@ class Generator
             );
 
             fclose($file);
+            chmod($dest, 0777);
 
             $created[] = $dest;
         }
@@ -91,7 +92,7 @@ class Generator
         $files = $config->getGroups()->map(function (Group $group) use ($outputPath, $output, $template) {
             $folder = "{$outputPath}/generated";
             if (!file_exists($folder)) {
-                mkdir($folder);
+                mkdir($folder, 0777);
             }
 
             $file = fopen("{$folder}/{$group->toFileName()}.md", 'w');
@@ -105,6 +106,7 @@ class Generator
             );
 
             fclose($file);
+            chmod("{$folder}/{$group->toFileName()}.md", 0777);
 
             return "{$folder}/{$group->toFileName()}.md";
         });
